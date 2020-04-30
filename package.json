@@ -5,11 +5,23 @@
   "main": "build/index.js",
   "repository": "https://github.com/orenteriab/SumMetricSystem",
   "author": "Efrain Renteria <orenteriab@gmail.com>",
-  "license": "NO LICENSE",
+  "license": "Fair",
   "private": false,
   "devDependencies": {
     "@babel/cli": "^7.8.4",
     "@babel/core": "^7.9.6",
-    "@babel/preset-env": "^7.9.6"
+    "@babel/preset-env": "^7.9.6",
+    "nodemon": "^2.0.3"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "uuid": "^8.0.0"
+  },
+  "scripts": {
+    "prestart": "babel src --out-dir build --config-file ./src/babel.config.json",
+    "start": "node ./build/index.js sum-metric-system",
+    "dev:start": "nodemon --watch src --exec npm start"
   }
 }
