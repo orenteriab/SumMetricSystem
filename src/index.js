@@ -56,8 +56,8 @@ const app = express();
  * @param {express.Response} res
  * @param {express.NextFunction} next
  */
-const authMiddleware = ({ headers: { authorization } }, res, next) => {
-  if (authorization !== AUTH_KEY) {
+const authMiddleware = (req, res, next) => {
+  if (req.headers.authorization !== AUTH_KEY) {
     return res.status(401).json({ error: 'You are not authorized to perform this action.' });
   }
   next();
@@ -65,19 +65,22 @@ const authMiddleware = ({ headers: { authorization } }, res, next) => {
 
 app.use(authMiddleware, bodyParser.json());
 
-app.post('/metric/:key', ({ params: { key }, body: { value: incomingValue } }, res) => {
+app.post('/metric/:key', (req, res) => {
+  const incomingValue = req.body.value;
+
   if (isNaN(incomingValue)) {
     return res.status(422).send({ error: 'The "value" property in the request must to be a number.' });
   }
 
   const floatIncomingValue = parseFloat(incomingValue);
   const value = Math.round(floatIncomingValue);
+  const key = req.params.key;
   const metricModel = Object.freeze(new MetricModel(key, value));
-  const { [key]: keyDict = {} } = metrics;
+  const metricsKeyDict = metrics[key] || {};
   const metricsReplacement = Object.freeze({
     ...metrics,
     [key]: {
-      ...keyDict,
+      ...metricsKeyDict,
       [metricModel.uuid]: metricModel
     }
   });
@@ -87,13 +90,14 @@ app.post('/metric/:key', ({ params: { key }, body: { value: incomingValue } }, r
   res.json({});
 });
 
-app.get('/metric/:key/sum', ({ params: { key } }, res) => {
+app.get('/metric/:key/sum', (req, res) => {
+  const key = req.params.key;
+
   if (!(key in metrics)) {
     return res.status(404).json({ error: 'The metric could not be found.' });
   }
 
-  const { [key]: keyDict = {} } = metrics;
-  const value = Object.values(keyDict).reduce((acc, met) => acc + met.value, 0);
+  const value = Object.values(metrics[key]).reduce((acc, met) => acc + met.value, 0);
   res.json({ value });
 });
 
