@@ -1,0 +1,15 @@
+{
+  "name": "sum-metric-system",
+  "version": "1.0.0",
+  "description": "A metric logging and reporting service that sums metrics by time window for the most recent hour.",
+  "main": "build/index.js",
+  "repository": "https://github.com/orenteriab/SumMetricSystem",
+  "author": "Efrain Renteria <orenteriab@gmail.com>",
+  "license": "NO LICENSE",
+  "private": false,
+  "devDependencies": {
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6"
+  }
+}
