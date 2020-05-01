@@ -37,7 +37,7 @@ export const addMetric = (key, incomingValue) => {
   const value = Math.round(floatIncomingValue);
   const metric = Object.freeze(new MetricModel(key, value));
 
-  if (!Object.keys(metrics).includes(key)) {
+  if (!(key in metrics)) {
     metrics[key] = {};
   }
 
