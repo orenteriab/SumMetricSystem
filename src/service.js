@@ -1,6 +1,6 @@
 import { EXPIRE_TIME } from './config';
 import ExpireMetricEmitter, { EXPIRE_METRIC_EVENT } from './event-emitter';
-import { MetricModel, metrics } from './model';
+import { MetricModel, metricsData } from './model';
 
 /**
  * Expire a `metric` once we receive the event.
@@ -8,7 +8,7 @@ import { MetricModel, metrics } from './model';
  * @param {MetricModel} The metric to expire
  */
 const expireMetric = ({ key, uuid }) => {
-  delete metrics[key][uuid];
+  delete metricsData[key][uuid];
 };
 
 const expireEmitter = Object.freeze(new ExpireMetricEmitter(expireMetric));
@@ -37,11 +37,11 @@ export const addMetric = (key, incomingValue) => {
   const value = Math.round(floatIncomingValue);
   const metric = Object.freeze(new MetricModel(key, value));
 
-  if (!(key in metrics)) {
-    metrics[key] = {};
+  if (!(key in metricsData)) {
+    metricsData[key] = {};
   }
 
-  metrics[key][metric.uuid] = metric;
+  metricsData[key][metric.uuid] = metric;
 
   setExpireTimeout(metric);
 };
@@ -51,6 +51,6 @@ export const addMetric = (key, incomingValue) => {
  * @param {string} key The name of the metric to lookup.
  */
 export const sumMetricValues = (key) => {
-  const metricDict = metrics[key] || {};
+  const metricDict = metricsData[key] || {};
   return Object.values(metricDict).reduce((acc, met) => met.value + acc, 0);
 };

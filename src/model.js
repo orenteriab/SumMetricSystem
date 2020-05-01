@@ -17,4 +17,4 @@ export class MetricModel {
 /**
  * @type {{[metric: string]: {[uuid:string]: MetricModel}}}}
  */
-export const metrics = {};
+export const metricsData = {};
