@@ -36,16 +36,13 @@ export const addMetric = (key, incomingValue) => {
   const floatIncomingValue = parseFloat(incomingValue);
   const value = Math.round(floatIncomingValue);
   const metric = Object.freeze(new MetricModel(key, value));
-  const metricDict = metrics[key] || {};
-  const metricsReplacement = Object.freeze({
-    ...metrics,
-    [key]: {
-      ...metricDict,
-      [metric.uuid]: metric
-    }
-  });
 
-  Object.assign(metrics, metricsReplacement);
+  if (!Object.keys(metric).includes(key)) {
+    metrics[key] = {};
+  }
+
+  metrics[key][metric.uuid] = metric;
+
   setExpireTimeout(metric);
 };
 
