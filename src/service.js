@@ -1,5 +1,5 @@
 import { EXPIRE_TIME } from './config';
-import ExpireMetricEmitter from './event-emitter';
+import ExpireMetricEmitter, { EXPIRE_METRIC_EVENT } from './event-emitter';
 import { MetricModel, metrics } from './model';
 
 /**
@@ -19,7 +19,7 @@ const expireEmitter = Object.freeze(new ExpireMetricEmitter(expireMetric));
  * @param {MetricModel} metric The metric that will expire after the timeout.
  */
 const setExpireTimeout = (metric) => {
-  setTimeout(() => expireEmitter.emit('expire', metric), EXPIRE_TIME);
+  setTimeout(() => expireEmitter.emit(EXPIRE_METRIC_EVENT, metric), EXPIRE_TIME);
 };
 
 /**
