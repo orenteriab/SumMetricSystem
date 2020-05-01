@@ -15,6 +15,6 @@ export class MetricModel {
 }
 
 /**
- * @type {Object<string, Object<string, MetricModel>>}
+ * @type {{[metric: string]: {[uuid:string]: MetricModel}}}}
  */
 export const metrics = {};
