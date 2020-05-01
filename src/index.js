@@ -24,10 +24,6 @@ const metrics = {};
  */
 const expireListener = ({ key, uuid }) => {
   delete metrics[key][uuid];
-
-  if (Object.keys(metrics[key]).length === 0) {
-    delete metrics[key];
-  }
 };
 
 class MetricExpireEmitter extends EventEmitter { }
@@ -45,6 +41,13 @@ class MetricModel {
     this.uuid = uuidv1();
     this.key = key;
     this.value = value;
+  }
+
+  expirationAware () {
+    setTimeout(
+      () => metricExpireEmmiter.emit('expire', this),
+      EXPIRE_TIME
+    );
   }
 }
 
@@ -75,29 +78,29 @@ app.post('/metric/:key', (req, res) => {
   const floatIncomingValue = parseFloat(incomingValue);
   const value = Math.round(floatIncomingValue);
   const key = req.params.key;
-  const metricModel = Object.freeze(new MetricModel(key, value));
-  const metricsKeyDict = metrics[key] || {};
+  const metric = Object.freeze(new MetricModel(key, value));
+  const metricDict = metrics[key] || {};
   const metricsReplacement = Object.freeze({
     ...metrics,
     [key]: {
-      ...metricsKeyDict,
-      [metricModel.uuid]: metricModel
+      ...metricDict,
+      [metric.uuid]: metric
     }
   });
 
   Object.assign(metrics, metricsReplacement);
-  setTimeout(() => metricExpireEmmiter.emit('expire', metricModel), EXPIRE_TIME);
+  metric.expirationAware();
   res.json({});
 });
 
 app.get('/metric/:key/sum', (req, res) => {
   const key = req.params.key;
+  const metricDict = metrics[key] || {};
 
-  if (!(key in metrics)) {
-    return res.status(404).json({ error: 'The metric could not be found.' });
-  }
+  const value = Object
+    .values(metricDict)
+    .reduce((acc, met) => acc + met.value, 0);
 
-  const value = Object.values(metrics[key]).reduce((acc, met) => acc + met.value, 0);
   res.json({ value });
 });
 
