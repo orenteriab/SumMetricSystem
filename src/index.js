@@ -1,6 +1,6 @@
 import authMiddleware from './auth';
 import bodyParser from 'body-parser';
-import { PORT } from './config';
+import { PORT, NODE_ENV } from './config';
 import express from 'express';
 import { addMetric, sumMetricValues } from './service';
 
@@ -61,5 +61,5 @@ app.get('/metric/:key/sum', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Sum metric system is running at port ${PORT}.`);
+  console.log(`Sum metric system is running at port ${PORT} on ${NODE_ENV}.`);
 });
