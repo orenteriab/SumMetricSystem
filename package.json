@@ -28,9 +28,15 @@
     "uuid": "^8.0.0"
   },
   "scripts": {
-    "prestart": "babel src --out-dir build --config-file ./src/babel.config.json",
-    "start": "node ./build/index.js sum-metric-system",
-    "dev:start": "nodemon --watch src --exec npm start",
-    "lint": "eslint -c ./src/.eslintrc.json --fix ./src"
+    "prestart": "npm install",
+    "start:loader": "(rm -rf ./build) && (npm run codestyle) && (node ./build/index.js)",
+    "start:prod:config:loader": "(rm -f .env) && (cp .env.prod .env)",
+    "start": "(npm run start:prod:config:loader) && (NODE_ENV=production npm run start:loader)",
+    "start:dev:config:loader": "(rm -f .env) && (cp .env.dev .env)",
+    "start:dev:loader": "(npm run start:dev:config:loader) && (NODE_ENV=development npm run start:loader)",
+    "start:dev": "(npm run prestart) && (nodemon --watch src --exec npm run start:dev:loader)",
+    "lint": "eslint -c ./src/.eslintrc.json --fix ./src",
+    "transpile": "babel src --out-dir ./build --config-file ./src/babel.config.json",
+    "codestyle": "(npm run lint) && (npm run transpile)"
   }
 }
