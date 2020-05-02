@@ -1,7 +1,7 @@
 # SumMetricSystem
 A metric logging and reporting service that sums metrics by time window for the most recent hour.
 
-## Specification
+## Specification
 
 This service has two endpoints:
 - An endpoint to add metric values:
@@ -26,7 +26,7 @@ Response:
 }
 ```
 
-Some important things:
+*Some _important_ things:*
 - Every value added must to be deleted after 60 minutes.
 - Every value added must to be rounded to the nearest integer.
 - No database/store system is needed, a basic datastructure or file is enough.
@@ -42,7 +42,7 @@ Also, to make easier the configuration of some variables, the application relays
 
 ### Start the service
 
-To start the service in order to test it functionally, you just need to run the command: `npm run start:dev`; and that's it, this command will run the linter, transpile the code, and configure the environment as is needed for development.
+To start the service in order to test it functionally, you just need to run the command: `npm run start:dev`; and that's it, this command will run the linter, transpile the code, and configure the environment as is needed for development. This `start:dev` script works on top of `nodemon`, so every change in the `./src` directory will be reloaded automatically.
 
 Once the server is ready to listen, you can use your favorite REST client to hit the URLs:
 ```
