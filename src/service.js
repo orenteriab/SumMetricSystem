@@ -3,8 +3,8 @@ import { MetricModel, metricsData } from './model';
 
 /**
  * It creates or append a `metric` into the `metricsData` collection.
- * After it's pushed into the `metricsData` a timeout is set to
- * get rid of that `metric` after the `EXPIRE_TIME` comes down.
+ * After it's pushed into the `metricsData` collection, a timeout is
+ * set to get rid of that `metric` after the `EXPIRE_TIME` comes down.
  * @param {string} key The name of the metric to add.
  * @param {string} incomingValue The value for that metric.
  */
