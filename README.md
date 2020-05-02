@@ -38,7 +38,9 @@ You need `node` and `npm` to make it work.
 
 It was coded using Babel, to support modules and some features of ES6/7 at development time. It has a pretty basic configuration, though. The code can be found at `./src` directory.
 
-Also, to make easier the configuration of some variables, the application relays on dotEnv.
+*Note:* As AWS Elastic BeanStack is the target to deploy, all scripts in `./package.json` were written to work in a *NIX system. So, if you are using Windows 10, you may want to install a Windows Subsystem for Linux (Ubuntu is the most popular).
+
+Also, to make easier the configuration of some variables, the application depends on dotEnv. To tweak the configuration you may edit `./env.dev` for development use, or `./env.prod` for production.
 
 ### Start the service
 
