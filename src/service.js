@@ -2,26 +2,9 @@ import { EXPIRE_TIME } from './config';
 import { MetricModel, metricsData } from './model';
 
 /**
- * Expire a `metric` once we receive the event.
- * This is the listener method of `expire` event.
- * @param {MetricModel} The metric to expire
- */
-const expireMetric = ({ key, uuid }) => {
-  delete metricsData[key][uuid];
-};
-
-/**
- * Expires a metric based on the EXPIRE_TIME env value.
- *
- * @param {MetricModel} metric The metric that will expire after the timeout.
- */
-const setExpireTimeout = (metric) => {
-  setTimeout(() => expireMetric(metric), EXPIRE_TIME);
-};
-
-/**
- * It creates or append a metric into the `metrics` collection.
- *
+ * It creates or append a `metric` into the `metricsData` collection.
+ * After it's pushed into the `metricsData` a timeout is set to
+ * get rid of that `metric` after the `EXPIRE_TIME` comes down.
  * @param {string} key The name of the metric to add.
  * @param {string} incomingValue The value for that metric.
  */
@@ -39,8 +22,10 @@ export const addMetric = (key, incomingValue) => {
   }
 
   metricsData[key][metric.uuid] = metric;
-
-  setExpireTimeout(metric);
+  setTimeout(
+    () => delete metricsData[metric.key][metric.uuid],
+    EXPIRE_TIME
+  );
 };
 
 /**
