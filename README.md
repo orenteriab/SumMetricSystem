@@ -40,7 +40,7 @@ It was coded using Babel, to support modules and some features of ES6/7 at devel
 
 *Note:* As AWS Elastic BeanStack is the target to deploy, all scripts in `./package.json` were written to work in a *NIX system. So, if you are using Windows 10, you may want to install a Windows Subsystem for Linux (Ubuntu is the most popular).
 
-Also, to make easier the configuration of some variables, the application depends on dotEnv. To tweak the configuration you may edit `./env.dev` for development use, or `./env.prod` for production.
+Also, to make easier the configuration of some variables, the service depends on dotEnv. To tweak the configuration you may edit `./env.dev` for development use, or `./env.prod` for production.
 
 ### Start the service
 
@@ -64,9 +64,9 @@ curl \
   'http://localhost:3000/metric/visitors/sum'
 ```
 
-### Application structure
+### Service structure
 
-The application has a pretty simple structure:
+The service has a pretty simple structure:
 - `./src/.eslintrc.json`: Some basic configurations to have some codestyling.
 - `./src/auth.js`: A simple authorization-simulator middleware.
 - `./src/babel.config.json`: The babel configuration.
