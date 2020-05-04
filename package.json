@@ -42,7 +42,7 @@
     "start:dev:loader": "(npm run start:dev:config:loader) && (NODE_ENV=development npm run start:loader)",
     "start:dev": "(npm install) && (nodemon --watch src --exec npm run start:dev:loader)",
     "lint": "eslint -c ./src/.eslintrc.json --fix ./src",
-    "transpile": "babel src --out-dir ./build --config-file ./babel.config.json --ignore ./src/*.test.js",
+    "transpile": "babel src --out-dir ./build --config-file ./babel.config.json --ignore ./src/**/*.test.js",
     "codestyle": "(npm run lint) && (npm run transpile)",
     "test": "(rm -rf .env && cp .env.test .env) && jest",
     "test:dev": "jest --watch",
