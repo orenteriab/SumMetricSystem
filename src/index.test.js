@@ -44,13 +44,13 @@ describe('Api tests', () => {
     beforeEach(() => {
       jest.useFakeTimers();
     });
-  
+
     afterEach(() => {
       jest.runOnlyPendingTimers();
     });
 
     test('Add happy path', async () => {
-      const response = await requestMethodsBuilder['post']('/metric/visitors')
+      const response = await requestMethodsBuilder.post('/metric/visitors')
         .auth(authKey, { type: 'bearer' })
         .send({ value: 35 });
 
@@ -59,7 +59,7 @@ describe('Api tests', () => {
     });
 
     test('Add not so happy path', async () => {
-      const response = await requestMethodsBuilder['post']('/metric/visitors')
+      const response = await requestMethodsBuilder.post('/metric/visitors')
         .auth(authKey, { type: 'bearer' })
         .send({ value: 'I think a string is a good idea' });
 
@@ -68,63 +68,63 @@ describe('Api tests', () => {
         error: 'The "value" property in the request must to be a number.'
       });
     });
-  })
+  });
 
   describe('Authorized timer', () => {
-    test('Add and sum', async() => {
+    test('Add and sum', async () => {
       jest.useRealTimers();
 
-      const firstAddResponse = await requestMethodsBuilder['post']('/metric/visitors')
+      const firstAddResponse = await requestMethodsBuilder.post('/metric/visitors')
         .auth(authKey, { type: 'bearer' })
         .send({ value: 30 });
 
       expect(firstAddResponse.status).toBe(200);
       expect(firstAddResponse.body).toEqual({});
 
-      const firstSumResponse = await requestMethodsBuilder['get']('/metric/visitors/sum')
+      const firstSumResponse = await requestMethodsBuilder.get('/metric/visitors/sum')
         .auth(authKey, { type: 'bearer' })
         .send();
 
       expect(firstSumResponse.status).toBe(200);
       expect(firstSumResponse.body).toHaveProperty('value');
-      expect(firstSumResponse.body['value']).toBe(30);
+      expect(firstSumResponse.body.value).toBe(30);
 
-      await new Promise(s => setTimeout(s, 100));
+      await new Promise(resolve => setTimeout(resolve, 100));
 
-      const secondAddResponse = await requestMethodsBuilder['post']('/metric/visitors')
+      const secondAddResponse = await requestMethodsBuilder.post('/metric/visitors')
         .auth(authKey, { type: 'bearer' })
         .send({ value: 15 });
 
       expect(secondAddResponse.status).toBe(200);
       expect(secondAddResponse.body).toEqual({});
 
-      const secondSumResponse = await requestMethodsBuilder['get']('/metric/visitors/sum')
+      const secondSumResponse = await requestMethodsBuilder.get('/metric/visitors/sum')
         .auth(authKey, { type: 'bearer' })
         .send();
 
       expect(secondSumResponse.status).toBe(200);
       expect(secondSumResponse.body).toHaveProperty('value');
-      expect(secondSumResponse.body['value']).toBe(45);
+      expect(secondSumResponse.body.value).toBe(45);
 
-      await new Promise(s => setTimeout(s, 100));
+      await new Promise(resolve => setTimeout(resolve, 100));
 
-      const thirdSumResponse = await requestMethodsBuilder['get']('/metric/visitors/sum')
+      const thirdSumResponse = await requestMethodsBuilder.get('/metric/visitors/sum')
         .auth(authKey, { type: 'bearer' })
         .send();
 
       expect(thirdSumResponse.status).toBe(200);
       expect(thirdSumResponse.body).toHaveProperty('value');
-      expect(thirdSumResponse.body['value']).toBe(15);
+      expect(thirdSumResponse.body.value).toBe(15);
 
-      await new Promise(s => setTimeout(s, 100));
+      await new Promise(resolve => setTimeout(resolve, 100));
 
-      const fourthSumResponse = await requestMethodsBuilder['get']('/metric/visitors/sum')
+      const fourthSumResponse = await requestMethodsBuilder.get('/metric/visitors/sum')
         .auth(authKey, { type: 'bearer' })
         .send();
 
       expect(fourthSumResponse.status).toBe(200);
       expect(fourthSumResponse.body).toHaveProperty('value');
-      expect(fourthSumResponse.body['value']).toBe(0);
+      expect(fourthSumResponse.body.value).toBe(0);
     });
   });
 
