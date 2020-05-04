@@ -2,6 +2,14 @@ import { EXPIRE_TIME } from './config';
 import { MetricModel, metricsData } from './model';
 
 /**
+ * Deletes a specific `metric` from the `metricsData` collection.
+ * @param {MetricModel} metric
+ */
+export const deleteMetric = ({ key, uuid }) => {
+  delete metricsData[key][uuid];
+};
+
+/**
  * It creates or append a `metric` into the `metricsData` collection.
  * After it's pushed into the `metricsData` collection, a timeout is
  * set to get rid of that `metric` after the `EXPIRE_TIME` comes down.
@@ -23,7 +31,7 @@ export const addMetric = (key, incomingValue) => {
 
   metricsData[key][metric.uuid] = metric;
   setTimeout(
-    () => delete metricsData[metric.key][metric.uuid],
+    () => deleteMetric(metric),
     EXPIRE_TIME
   );
 };
