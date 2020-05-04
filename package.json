@@ -13,6 +13,7 @@
     "@babel/preset-env": "^7.9.6",
     "@types/jest": "^25.2.1",
     "@types/node": "^13.13.4",
+    "@types/supertest": "^2.0.9",
     "babel-eslint": "^10.1.0",
     "babel-jest": "^25.5.1",
     "eslint": "^6.8.0",
@@ -22,7 +23,8 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "jest": "^25.5.4",
-    "nodemon": "^2.0.3"
+    "nodemon": "^2.0.3",
+    "supertest": "^4.0.2"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
@@ -41,7 +43,7 @@
     "lint": "eslint -c ./src/.eslintrc.json --fix ./src",
     "transpile": "babel src --out-dir ./build --config-file ./src/babel.config.json",
     "codestyle": "(npm run lint) && (npm run transpile)",
-    "test": "jest",
+    "test": "(rm -rf .env && cp .env.test .env) && jest",
     "test:dev": "jest --watch"
   }
 }
