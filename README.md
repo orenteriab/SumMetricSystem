@@ -52,7 +52,7 @@ Once the server is ready to listen, you can use your favorite REST client to hit
 curl \
   -H 'Authorization: Bearer ishallpass' \
   -d '{"value": 123}' \
-  -v \ # This flag is completely optional, but you know, it helps some times.
+  -v \
   'http://localhost:3000/metric/visitors'
 ```
 
@@ -60,9 +60,11 @@ curl \
 # To check the sum of values of a specific metric
 curl \
   -H 'Authorization: Bearer ishallpass' \
-  -v \ # This flag is completely optional, but you know, it helps some times.
+  -v \
   'http://localhost:3000/metric/visitors/sum'
 ```
+
+Note: `-v` is a completely optional flag, but sometimes it helps a lot.
 
 ### Service structure
 
@@ -83,3 +85,28 @@ You simply need to run the command `npm run test`, and that will run jest for yo
 ## Deployment
 
 The deployment process is pretty simple thanks to AWS CodePipeline. Currently is set to listen on commits/push signals on master branch. So, every push signal into master branch will result as a build on AWS CodePipeline that will impact the Elastic BeanStack environment.
+
+## Hit the _live_ server
+
+You can use your favorite HTTP client, below you ahve examples for cURL:
+
+```
+# To add a metric value on the live server
+curl \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer pr0ductionsha11p4ss' \
+  -d '{ "value": 50.1 }' \
+  http://summetricsystem.us-east-2.elasticbeanstalk.com/metric/views
+```
+
+```
+# To check the sum of values of a specific metric
+curl \
+  -H 'Content-Type: application/json' \
+  -H 'Authorization: Bearer pr0ductionsha11p4ss' \
+  http://summetricsystem.us-east-2.elasticbeanstalk.com/metric/views/sum
+```
+
+## Video Walkthrough
+
+[![Walkthrough](https://img.youtube.com/vi/dVVocU_3E4E/0.jpg)](https://www.youtube.com/watch?v=dVVocU_3E4E)
