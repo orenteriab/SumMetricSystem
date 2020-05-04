@@ -46,6 +46,6 @@
     "codestyle": "(npm run lint) && (npm run transpile)",
     "test": "(rm -rf .env && cp .env.test .env) && jest",
     "test:dev": "jest --watch",
-    "deploy": "(rm -rf ./build) && (npm ci) && (npm run test) && (npm run codestyle) && (git push origin master)"
+    "deploy": "(rm -rf ./build) && (npm ci) && (npm run lint) && (npm run test) && (git push origin master)"
   }
 }

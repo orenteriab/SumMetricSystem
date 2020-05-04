@@ -71,9 +71,14 @@ The service has a pretty simple structure:
 - `./src/auth.js`: A simple authorization-simulator middleware.
 - `./src/babel.config.json`: The babel configuration.
 - `./src/index.js`: Is the controller file, this handle the http requests.
+- `./src/index.test.js`: This is the test file for the `./src/index.js`
 - `./src/model.js`: It's a representation of a "data store", and the entity that is "persisted" (A.K.A. the metric).
 - `./src/service.js`: Here you can find the business logic.
+- `./src/service.test.js`: This is the test file for the `./src/service.js`
 
+## Test
+
+You simply need to run the command `npm run test`, and that will run jest for you.
 
 ## Deployment
 
