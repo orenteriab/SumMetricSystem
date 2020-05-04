@@ -23,5 +23,6 @@
             "always"
         ]
     },
-    "parser": "babel-eslint"
+    "parser": "babel-eslint",
+    "eslintIgnore": ["*.test.js"]
 }
