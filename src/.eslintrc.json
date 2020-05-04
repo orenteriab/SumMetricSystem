@@ -1,7 +1,9 @@
 {
+    "plugins": ["jest"],
     "env": {
         "es6": true,
-        "node": true
+        "node": true,
+        "jest/globals": true
     },
     "extends": [
         "standard"
@@ -14,7 +16,7 @@
         "ecmaVersion": 2018,
         "sourceType": "module",
         "babelOptions": {
-            "configFile": "./babel.config.json"
+            "configFile": "../babel.config.json"
         }
     },
     "rules": {
@@ -23,6 +25,5 @@
             "always"
         ]
     },
-    "parser": "babel-eslint",
-    "eslintIgnore": ["*.test.js"]
+    "parser": "babel-eslint"
 }
