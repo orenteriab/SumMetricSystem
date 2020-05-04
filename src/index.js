@@ -4,7 +4,7 @@ import { PORT, NODE_ENV } from './config';
 import express from 'express';
 import { addMetric, sumMetricValues } from './service';
 
-const app = express();
+export const app = express();
 
 app.use(authMiddleware, bodyParser.json());
 
@@ -60,6 +60,8 @@ app.get('/metric/:key/sum', (req, res) => {
   res.status(status).json(responseBody);
 });
 
-app.listen(PORT, () => {
-  console.log(`Sum metric system is running at port ${PORT} on ${NODE_ENV}.`);
+export const server = app.listen(PORT, () => {
+  if (NODE_ENV !== 'test') {
+    console.log(`Sum metric system is running at port ${PORT} on ${NODE_ENV}.`);
+  }
 });
