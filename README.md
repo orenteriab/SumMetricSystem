@@ -106,7 +106,3 @@ curl \
   -H 'Authorization: Bearer pr0ductionsha11p4ss' \
   http://summetricsystem.us-east-2.elasticbeanstalk.com/metric/views/sum
 ```
-
-## Video Walkthrough
-
-[![Walkthrough](https://img.youtube.com/vi/dVVocU_3E4E/0.jpg)](https://www.youtube.com/watch?v=dVVocU_3E4E)
