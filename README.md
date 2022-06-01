@@ -81,28 +81,3 @@ The service has a pretty simple structure:
 ## Test
 
 You simply need to run the command `npm run test`, and that will run jest for you.
-
-## Deployment
-
-The deployment process is pretty simple thanks to AWS CodePipeline. Currently is set to listen on commits/push signals on master branch. So, every push signal into master branch will result as a build on AWS CodePipeline that will impact the Elastic BeanStack environment.
-
-## Hit the _live_ server
-
-You can use your favorite HTTP client, below you ahve examples for cURL:
-
-```
-# To add a metric value on the live server
-curl \
-  -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer pr0ductionsha11p4ss' \
-  -d '{ "value": 50.1 }' \
-  http://summetricsystem.us-east-2.elasticbeanstalk.com/metric/views
-```
-
-```
-# To check the sum of values of a specific metric
-curl \
-  -H 'Content-Type: application/json' \
-  -H 'Authorization: Bearer pr0ductionsha11p4ss' \
-  http://summetricsystem.us-east-2.elasticbeanstalk.com/metric/views/sum
-```
